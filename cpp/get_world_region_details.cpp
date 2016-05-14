@@ -26,18 +26,25 @@ static int embark_y_min = 9000;
 
 static bool embark_rectangle_calculated = false;
 
-
-// external functions prototypes -----------------------------------
+//----------------------------------------------------------------------------//
+// external functions prototypes
+//----------------------------------------------------------------------------//
 
 extern int fill_world_region_details(int world_pos_x,
                                      int world_pos_y
                                     );
 extern void delete_world_region_details(df::world_region_details* ptr_world_region_details);
 
-// -----------------------------------------------------------------
 
-// local functions prototypes --------------------------------------
+//----------------------------------------------------------------------------//
+// External variables
+//----------------------------------------------------------------------------//
+extern unsigned int fill_world_region_details_address;
+extern unsigned int delete_world_region_details_address;
 
+//----------------------------------------------------------------------------//
+// local functions prototypes
+//----------------------------------------------------------------------------//
 command_result get_world_region_details(color_ostream& con,
                                         std::vector <std::string>& parameters
                                        );
@@ -46,12 +53,12 @@ command_result get_world_region_details_command(color_ostream& con,
                                                 const DF_get_world_region_details_command*, // IN  protobuff message
                                                 DF_world_region_details_result*             // OUT protobuff message
                                                );
-// -----------------------------------------------------------------
 
-//
+
+//----------------------------------------------------------------------------//
 // Connect our functions to the RPC server so they can be called
 // remotely by the client
-//
+//----------------------------------------------------------------------------//
 DFhackCExport DFHack::RPCService* plugin_rpcconnect(color_ostream&)
 {
     DFHack::RPCService* svc = new DFHack::RPCService();
@@ -80,6 +87,16 @@ DFhackCExport command_result plugin_init(color_ostream& con,
                                          std::vector <PluginCommand>& commands
                                         )
 {
+
+    uint32_t addr;
+
+    addr = Core::getInstance().vinfo->getAddress("fill_world_region_details");
+    fill_world_region_details_address = addr;
+
+    addr = Core::getInstance().vinfo->getAddress("delete_world_region_details");
+    delete_world_region_details_address = addr;
+
+
     // Fill the command list with your commands.
     commands.push_back(PluginCommand("get_world_region_details",
                                      "Returns a world region details using protocol buffers",
