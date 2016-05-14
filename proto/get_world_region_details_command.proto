@@ -1,0 +1,8 @@
+option optimize_for=LITE_RUNTIME;
+
+
+message DF_get_world_region_details_command
+{
+    required int32 world_pos_x =  1;
+    required int32 world_pos_y =  2;
+}
