@@ -34,6 +34,7 @@ IF(UNIX)
     SET(PROJECT_LIBS
         # add any extra linux libs here
         dfhack-tinythread
+		PROTOBUFS
         ${PROJECT_LIBS}
     )
 # windows
@@ -41,6 +42,7 @@ ELSE(UNIX)
     SET(PROJECT_LIBS
         # add any extra windows libs here
         dfhack-tinythread
+		PROTOBUFS
         ${PROJECT_LIBS}
         $(NOINHERIT)
     )
